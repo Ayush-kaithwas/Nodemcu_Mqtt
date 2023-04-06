@@ -1,21 +1,19 @@
-// ir 
 #include <Arduino.h>
 #include <ESP8266mDNS.h>
 #include <IRremoteESP8266.h>
 #include <IRsend.h>
 #include <WiFiClient.h>
-// mqtt
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
 // Update these with values suitable for your network.
 
-const char* ssid = "Airtel_Fibernet";
-const char* password = "air93338";
+const char* ssid = "Airtel_Fibernet"; //  Wifi Name
+const char* password = "air93338"; // Wifi Password
 const char* mqtt_server = "test.mosquitto.org"; // ping test.mosquito.org
 
-const uint16_t kIrLed = 4; // ir
-IRsend irsend(kIrLed); // ir
+const uint16_t kIrLed = 4;
+IRsend irsend(kIrLed);
 
 
 WiFiClient espClient;
@@ -55,16 +53,6 @@ void callback(char* topic, byte* payload, unsigned int length) {
   }
   Serial.print(" is transmitted successfully");
   Serial.println();
-
-  // Switch on the LED if an 1 was received as first character
-//  if ((char)payload[0] == '1') {
-//    digitalWrite(BUILTIN_LED, LOW);   // Turn the LED on (Note that LOW is the voltage level
-//    // but actually the LED is on; this is because
-//    // it is active low on the ESP-01)
-//  } else {
-//    digitalWrite(BUILTIN_LED, HIGH);  // Turn the LED off by making the voltage HIGH
-//  }
-
   irsend.sendNEC((char)payload[0]);
 
 }
